@@ -2,22 +2,50 @@ var fs = require('fs');
 
 module.exports = exports = extract;
 
-var tokenStart = '-- ASN1START';
-var tokenStop = '-- ASN1STOP';
+var token = {
+    ran2: {
+        start: {
+            string: '-- ASN1START',
+            re: /^-- ASN1START/gm,
+        },
+        stop: {
+            string: '-- ASN1STOP',
+            re: /^-- ASN1STOP/gm,
+        },
+    },
+    ran3: {
+        start: {
+            string: '-- ***',
+            re: /^-- \*\*\*/gm,
+        },
+        stop: {
+            string: 'END',
+            re: /^END$/gm,
+        },
+    },
+}
 
 function extract(filename) {
     var raw = fs.readFileSync(filename, 'utf8');
+    if (raw.indexOf(token.ran2.start.string) != -1) {
+        var tk = token.ran2;
+    } else if (raw.indexOf(token.ran3.start.string) != -1) {
+        var tk = token.ran3;
+    } else {
+        throw 'Couldn\'t find known tokens';
+    }
+
     var text = '';
     while (true) {
-        let indexStart = raw.indexOf(tokenStart);
+        let indexStart = raw.search(tk.start.re);
         if (indexStart == -1) {
             break;
         }
-        let indexStop = raw.substring(indexStart).indexOf(tokenStop);
+        let indexStop = raw.substring(indexStart).search(tk.stop.re);
         text += `${raw.substring(indexStart,
-                                 indexStart + indexStop + tokenStop.length)
+                                 indexStart + indexStop + tk.stop.string.length)
                         .replace(/\uFFFD/g, '')}\n`;
-        raw = raw.substring(indexStart + indexStop + tokenStop.length);
+        raw = raw.substring(indexStart + indexStop + tk.stop.string.length);
     }
     return text;
 }
