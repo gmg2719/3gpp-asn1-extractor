@@ -1,8 +1,4 @@
 {
     "name": "3gpp-asn1-extractor",
-    "main": "extractor.js",
-    "dependencies": {
-        "docxtemplater": "^3.6.5",
-        "jszip": "^2.6.1"
-    }
+    "main": "extractor.js"
 }
