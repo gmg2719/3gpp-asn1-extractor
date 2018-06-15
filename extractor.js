@@ -25,11 +25,10 @@ var token = {
     },
 }
 
-function extract(filename) {
-    var raw = fs.readFileSync(filename, 'utf8');
-    if (raw.indexOf(token.ran2.start.string) != -1) {
+function extract(input) {
+    if (input.indexOf(token.ran2.start.string) != -1) {
         var tk = token.ran2;
-    } else if (raw.indexOf(token.ran3.start.string) != -1) {
+    } else if (input.indexOf(token.ran3.start.string) != -1) {
         var tk = token.ran3;
     } else {
         throw 'Couldn\'t find known tokens';
@@ -37,22 +36,23 @@ function extract(filename) {
 
     var text = '';
     while (true) {
-        let indexStart = raw.search(tk.start.re);
+        let indexStart = input.search(tk.start.re);
         if (indexStart == -1) {
             break;
         }
-        let indexStop = raw.substring(indexStart).search(tk.stop.re);
-        text += `${raw.substring(indexStart,
+        let indexStop = input.substring(indexStart).search(tk.stop.re);
+        text += `${input.substring(indexStart,
                                  indexStart + indexStop + tk.stop.string.length)
                         .replace(/\uFFFD/g, '')}\n`;
-        raw = raw.substring(indexStart + indexStop + tk.stop.string.length);
+        input = input.substring(indexStart + indexStop + tk.stop.string.length);
     }
     return text;
 }
 
 if (require.main == module) {
     if (process.argv.length >= 3) {
-        console.log(extract(process.argv[2]));
+        let input = fs.readFileSync(process.argv[2], 'utf8');
+        console.log(extract(input));
     } else {
         console.log('Usage: node extractor <file_name>');
         console.log('  ex : node extractor 36331-f10.txt');
