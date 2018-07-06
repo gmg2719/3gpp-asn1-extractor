@@ -1,4 +1,8 @@
 {
     "name": "3gpp-asn1-extractor",
-    "main": "extractor.js"
+    "main": "extractor.js",
+    "types": "extractor.d.ts",
+    "dependencies": {
+        "@types/node": "^10.5.2"
+    }
 }

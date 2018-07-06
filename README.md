@@ -1,28 +1,26 @@
 # 3GPP ASN.1 Extractor
 
-It extracts ASN.1 from a text
+It extracts ASN.1 from a UTf-8 encoded text
+
+## Dependencies and Build
+
+```sh
+npm install typescript @types/node
+tsc
+```
 
 ## Usage
-
-Make sure that a text is encoded in UTF-8
-
-### Package
-
-```js
-var extract = require('./3gpp-asn1-extractor');
-var asn1Text = extract(<string_containing_ASN.1>);
-```
-
-### Module
-
-```js
-var extract = require('./extractor');
-var asn1Text = extract(<string_containing_ASN.1>);
-```
 
 ### Command Line
 
 ```sh
-node extractor <file_name>
-# ex: node extractor 36331-f10.txt
+node extractor FILE_IN > FILE_OUT
+# ex: node extractor resources/36331-f10.txt > 36331-f10.asn1
+```
+
+### Package
+
+```js
+let extract = require('3gpp-asn1-extractor').extract;
+let asn1Text = extract(stringContainingAsn1Text);
 ```
