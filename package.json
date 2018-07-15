@@ -1,4 +1,6 @@
 {
-    "name": "3gpp-asn1-extractor",
+    "name": "third-gen-asn1-extractor",
+    "version": "1.0.0",
+    "license": "GPL-3.0",
     "main": "extractor.js"
 }
