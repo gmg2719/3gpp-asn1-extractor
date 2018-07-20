@@ -1,6 +1,6 @@
 # 3GPP ASN.1 Extractor
 
-It extracts ASN.1 from a text
+It extracts ASN.1 from a 3GPP RRC (36.331, 38.331) specification text
 
 ## Install
 
@@ -10,13 +10,14 @@ npm i third-gen-asn1-extractor
 
 ## Usage
 
-Make sure that a text is encoded in UTF-8
+- Convert 3GPP RRC (36.331, 38.331) specification document
+   - Make sure that a text is encoded in UTF-8
 
 ### Package
 
 ```js
 var extract = require('third-gen-asn1-extractor');
-var asn1Text = extract(<string_containing_ASN.1>);
+var asn1Text = extract(stringContaining3gppAsn1);
 ```
 
 ### Command Line
